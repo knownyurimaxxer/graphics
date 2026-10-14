@@ -1,0 +1,78 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: ['**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+env:
+  RESOURCES_DIR: .github/workflows/resources
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (full history of all branches)
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Prepare artifact structure
+        run: |
+          set -euo pipefail
+
+          for f in root-index.html branch-index.html style.css generate_indexes.py; do
+            [ -f "$RESOURCES_DIR/$f" ] || { echo "Falta $RESOURCES_DIR/$f"; exit 1; }
+          done
+
+          mkdir -p _site
+
+          git archive origin/main | tar -x -C _site
+          rm -rf _site/.github
+
+          for ref in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin | grep -v -e '^origin$' -e '^origin/HEAD$' -e '^origin/main$'); do
+            branch="${ref#origin/}"
+            mkdir -p "_site/$branch"
+            git archive "$ref" | tar -x -C "_site/$branch"
+            rm -rf "_site/$branch/.github"
+          done
+
+          python3 "$RESOURCES_DIR/generate_indexes.py" _site "$RESOURCES_DIR"
+
+          find _site -maxdepth 2 -type d
+
+      - name: Debug contents
+        run: |
+          echo "=== Branches found ==="
+          git for-each-ref --format='%(refname:short)' refs/remotes/origin | grep -v -e '^origin$' -e '^origin/HEAD$'
+
+          echo
+          echo "=== Root of the site (main) ==="
+          find _site -maxdepth 1 -type f | sort
+
+          for dir in $(find _site -mindepth 1 -maxdepth 1 -type d | sort); do
+            echo
+            echo "=== $dir ==="
+            find "$dir" -type f | sort
+          done
+
+      - uses: actions/configure-pages@v6
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./_site
+
+      - id: deployment
+        uses: actions/deploy-pages@v5

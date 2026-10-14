@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{BRANCH}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Space+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"><style>
+{{STYLE}}
+</style>
+</head>
+<body>
+<div class="page">
+<header class="site-header">
+<!--<a class="back" href="{{ROOT}}">← Todas las ramas</a>-->
+<h1>{{BRANCH}}</h1>
+</header>
+<main>
+{{LISTING}}
+</main>
+</div>
+<script>
+document.querySelectorAll("figure").forEach(function (figure) {
+  var img = figure.querySelector("img");
+  var pre = figure.querySelector("pre.code");
+  var code = pre.querySelector("code");
+  var button = pre.querySelector(".copy");
+
+  code.textContent = new URL(img.getAttribute("src"), location.href).href;
+
+  function fallbackCopy(text) {
+    var area = document.createElement("textarea");
+    area.value = text;
+    area.style.position = "fixed";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand("copy");
+    document.body.removeChild(area);
+  }
+
+  function copy() {
+    var text = code.textContent;
+    var done = function () {
+      button.textContent = "¡Copiado!";
+      button.classList.add("done");
+      setTimeout(function () {
+        button.textContent = "¡Cópiame!";
+        button.classList.remove("done");
+      }, 1500);
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done, function () {
+        fallbackCopy(text);
+        done();
+      });
+    } else {
+      fallbackCopy(text);
+      done();
+    }
+  }
+
+  pre.addEventListener("click", copy);
+});
+</script>
+</body>
+</html>
