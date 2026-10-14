@@ -1,22 +1,31 @@
 :root {
-	color-scheme: light;
-	--bg: #f8e1d0;
-	--surface: rgba(255, 251, 246, 0.6);
-	--fg: #3a2a5c;
-	--muted: #7a6a9a;
-	--border: rgba(110, 80, 160, 0.2);
-	--code-bg: rgba(72, 54, 112, 0.88);
-	--accent: #7a4fb5;
-	--accent-2: #a2559c;
-	--deep: #5b3a94;
-	--violet: #8c6fca;
-	--accent-soft: rgba(122, 79, 181, 0.1);
-	--ok: #9be8b8;
+	color-scheme: dark;
+	--bg: #3b1d16;
+	--surface: rgba(74, 34, 22, 0.55);
+	--fg: #fff6ee;
+	--muted: #f0d2bc;
+	--border: rgba(255, 222, 196, 0.28);
+	--code-bg: rgba(52, 23, 15, 0.6);
+	--accent: #cba6ff;
+	--accent-2: #ee9be8;
+	--gold: #f1e6ff;
+	--lilac: #a98bff;
+	--accent-soft: rgba(203, 166, 255, 0.16);
+	--ok: #b5f0c8;
 	--radius: 10px;
-	--title-gradient: linear-gradient(95deg, var(--deep) 0%, var(--accent) 40%, var(--accent-2) 75%, var(--violet) 100%);
+	--title-gradient: linear-gradient(95deg, var(--gold) 0%, var(--accent) 45%, var(--accent-2) 75%, var(--lilac) 100%);
 	--font-display: "Kaushan Script", "Brush Script MT", cursive;
 	--font-body: "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 	--font-mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+	background: var(--bg);
 }
 
 body {
@@ -27,36 +36,46 @@ body {
 	line-height: 1.6;
 	position: relative;
 	background:
-		radial-gradient(ellipse 65% 45% at 10% 8%, rgba(236, 218, 240, 0.5), transparent 70%),
-		radial-gradient(ellipse 55% 40% at 95% 25%, rgba(255, 246, 225, 0.5), transparent 70%),
-		radial-gradient(ellipse 60% 40% at 30% 60%, rgba(247, 205, 190, 0.3), transparent 70%),
-		radial-gradient(ellipse 80% 45% at 70% 100%, rgba(255, 250, 240, 0.5), transparent 70%),
-		linear-gradient(175deg, #f6d6c0 0%, #f8e0cd 40%, #fbe9db 75%, #fdf2e8 100%);
+		radial-gradient(ellipse 65% 45% at 10% 8%, rgba(255, 170, 110, 0.40), transparent 65%),
+		radial-gradient(ellipse 55% 40% at 95% 25%, rgba(255, 205, 150, 0.28), transparent 65%),
+		radial-gradient(ellipse 60% 40% at 30% 60%, rgba(240, 120, 110, 0.24), transparent 65%),
+		radial-gradient(ellipse 80% 45% at 70% 100%, rgba(255, 190, 130, 0.32), transparent 65%),
+		linear-gradient(175deg, #3b1d16 0%, #5c2d1b 45%, #7f4022 80%, #9a5430 100%);
 	background-attachment: fixed;
+}
+
+/* Cielo estrellado, muy sutil */
+body::before,
+body::after {
+	content: "";
+	position: fixed;
+	inset: 0;
+	z-index: -1;
+	pointer-events: none;
 }
 
 /* Estrellas pequeñas y densas */
 body::before {
 	background-image:
-		radial-gradient(0.8px 0.8px at 12px 24px, rgba(255, 255, 255, 0.95), transparent),
-		radial-gradient(0.7px 0.7px at 47px 91px, rgba(255, 255, 255, 0.8), transparent),
-		radial-gradient(0.9px 0.9px at 83px 53px, rgba(150, 120, 200, 0.5), transparent),
-		radial-gradient(0.7px 0.7px at 121px 118px, rgba(255, 255, 255, 0.8), transparent),
-		radial-gradient(0.8px 0.8px at 158px 17px, rgba(255, 255, 255, 0.95), transparent),
-		radial-gradient(0.7px 0.7px at 196px 76px, rgba(255, 255, 255, 0.8), transparent),
-		radial-gradient(0.9px 0.9px at 29px 142px, rgba(150, 120, 200, 0.45), transparent),
-		radial-gradient(0.7px 0.7px at 172px 150px, rgba(255, 255, 255, 0.85), transparent);
+		radial-gradient(0.8px 0.8px at 12px 24px, rgba(255, 255, 255, 0.9), transparent),
+		radial-gradient(0.7px 0.7px at 47px 91px, rgba(255, 255, 255, 0.7), transparent),
+		radial-gradient(0.9px 0.9px at 83px 53px, rgba(255, 240, 220, 0.8), transparent),
+		radial-gradient(0.7px 0.7px at 121px 118px, rgba(255, 255, 255, 0.6), transparent),
+		radial-gradient(0.8px 0.8px at 158px 17px, rgba(240, 225, 255, 0.8), transparent),
+		radial-gradient(0.7px 0.7px at 196px 76px, rgba(255, 255, 255, 0.7), transparent),
+		radial-gradient(0.9px 0.9px at 29px 142px, rgba(255, 255, 255, 0.6), transparent),
+		radial-gradient(0.7px 0.7px at 172px 150px, rgba(255, 230, 210, 0.7), transparent);
 	background-size: 210px 170px;
-	opacity: 0.6;
+	opacity: 0.55;
 }
 
 /* Estrellas más grandes y escasas, que titilan despacio */
 body::after {
 	background-image:
 		radial-gradient(1.4px 1.4px at 70px 60px, #fff, transparent),
-		radial-gradient(1.2px 1.2px at 260px 180px, rgba(150, 120, 200, 0.6), transparent),
+		radial-gradient(1.2px 1.2px at 260px 180px, #ffe0bd, transparent),
 		radial-gradient(1.5px 1.5px at 390px 40px, #fff, transparent),
-		radial-gradient(1.2px 1.2px at 150px 300px, #fffaf0, transparent),
+		radial-gradient(1.2px 1.2px at 150px 300px, #f5d6ff, transparent),
 		radial-gradient(1.3px 1.3px at 450px 260px, #fff, transparent);
 	background-size: 520px 380px;
 	animation: twinkle 7s ease-in-out infinite alternate;
@@ -64,17 +83,17 @@ body::after {
 
 @keyframes twinkle {
 	from {
-		opacity: 0.25;
+		opacity: 0.2;
 	}
 	to {
-		opacity: 0.9;
+		opacity: 0.75;
 	}
 }
 
 @media (prefers-reduced-motion: reduce) {
 	body::after {
 		animation: none;
-		opacity: 0.6;
+		opacity: 0.5;
 	}
 }
 
@@ -122,7 +141,7 @@ body::after {
 	transition: color 0.15s;
 
 	&:hover {
-		color: var(--deep);
+		color: var(--gold);
 	}
 }
 
@@ -208,7 +227,7 @@ a {
 
 		&:hover {
 			border-color: var(--accent);
-			background: linear-gradient(90deg, var(--accent-soft), rgba(255, 255, 255, 0.4));
+			background: linear-gradient(90deg, var(--accent-soft), rgba(255, 190, 140, 0.16));
 			transform: translateY(-1px);
 
 			&::after {
@@ -290,7 +309,7 @@ pre.code {
 		letter-spacing: 0.05em;
 		text-transform: uppercase;
 		color: var(--accent);
-		background: rgba(255, 244, 232, 0.94);
+		background: rgba(62, 28, 18, 0.9);
 		border: 1px solid var(--border);
 		border-radius: 6px;
 		cursor: pointer;
@@ -301,8 +320,8 @@ pre.code {
 		}
 
 		&.done {
-			color: #1f7a46;
-			border-color: #1f7a46;
+			color: var(--ok);
+			border-color: var(--ok);
 		}
 
 		@media (max-width: 30rem) {
