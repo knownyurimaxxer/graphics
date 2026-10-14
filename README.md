@@ -1,0 +1,1 @@
+Esto es un archivo de todas las imágenes que he hecho para mis personajes.
