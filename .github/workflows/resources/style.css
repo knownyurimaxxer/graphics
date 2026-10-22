@@ -105,6 +105,10 @@ body::after {
 	@media (max-width: 30rem) {
 		padding: 1.25rem 1rem;
 	}
+
+	&>center {
+		margin-top: 2rem;
+	}
 }
 
 .site-header {
