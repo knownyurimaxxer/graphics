@@ -284,6 +284,7 @@ figure {
 
 pre.code {
 	position: relative;
+	margin-bottom: 0;
 
 	code {
 		font-family: var(--font-mono);
